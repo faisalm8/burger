@@ -1,3 +1,4 @@
+// Import ORM to create functions that will interact with the database
 var orm = require('../config/orm.js');
 
 var burger = {
@@ -13,9 +14,10 @@ var burger = {
 	},
 	update: function(objColVals, condition, cb) {
 		orm.update('burgers', objColVals, condition, function(res) {
-			cb(res)""
+			cb(res);
 		});
 	}
 };
 
+// Export the database functions for controller
 module.exports = burger;

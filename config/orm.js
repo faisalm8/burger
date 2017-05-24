@@ -1,5 +1,7 @@
+// Import MySql connection
 var connection = require('../config/connection.js');
 
+// Create function for SQL syntax
 function printQuestion (num) {
 	var arr = [];
 
@@ -9,6 +11,7 @@ function printQuestion (num) {
 	return arr.toString();
 }
 
+// Another function for SQL syntax
 function objToSql(ob) {
 	var arr = [];
 
@@ -20,6 +23,7 @@ function objToSql(ob) {
 	return arr.toString();
 }
 
+// Object for all SQL statement functions
 var orm = {
 	all: function(tableInput, cb) {
 		var queryString = "SELECT * FROM " + tableInput + ';';
@@ -46,7 +50,23 @@ var orm = {
 			if (err) {
 				throw err;
 			}
-			cd(result);
+			cb(result);
+		});
+	},
+	update: function(table, objColVals, condition, cb) {
+		var queryString = "UPDATE " + table;
+
+		queryString += " SET ";
+		queryString += objToSql(objColVals);
+		queryString += " WHERE ";
+		queryString += condition;
+
+		console.log(queryString);
+		connection.query(queryString, function(err, result) {
+			if (err) {
+				throw err;
+			}
+			cb(result);
 		});
 	}
 };
